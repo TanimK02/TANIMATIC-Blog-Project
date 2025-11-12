@@ -1,0 +1,24 @@
+.createPostContainer {
+    padding: 2rem;
+}
+
+.title {
+    margin: 1rem 0;
+}
+
+.bannerImgLabel {
+    font-size: 1rem;
+    color: black;
+    margin: 0.5rem 0;
+    font-weight: 600;
+}
+
+.uploadIcon {
+    background-image: url('./assets/upload.svg');
+    background-size: contain;
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: 1rem;
+    background-repeat: no-repeat;
+    background-position: center;
+}

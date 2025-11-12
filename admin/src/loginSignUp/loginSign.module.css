@@ -1,0 +1,103 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    height: 70%;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.background {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6f7f8;
+}
+
+.logo {
+    margin: 1.5rem 0;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 0 2rem;
+    padding-bottom: 2rem;
+    width: 100%;
+}
+
+.formBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.formBox label {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+.formBox label:nth-of-type(n+2) {
+    margin-top: 1rem;
+}
+
+.formBox input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-top: 0.2rem;
+}
+
+.formBox input::placeholder {
+    color: #aaa;
+    font-family: 'Newsreader', 'Georgia', 'Cambria', 'Times New Roman', serif;
+}
+
+.formBox button {
+    margin-top: 1rem;
+    padding: 0.7rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #137fec;
+    color: white;
+    cursor: pointer;
+}
+
+.formContainer h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.buttonGroup {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.buttonContainer {
+    width: 50%;
+}
+
+.buttonGroup button {
+    padding: 0.5rem 1rem;
+    border: none;
+    color: black;
+    cursor: pointer;
+    background-color: transparent;
+    width: 100%;
+    font-size: 1rem;
+    font-family: 'Newsreader', 'Georgia', 'Cambria', 'Times New Roman', serif;
+    font-weight: bold;
+}
+
+.underline {
+    border-bottom: 2px solid #137fec;
+}

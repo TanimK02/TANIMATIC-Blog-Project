@@ -1,0 +1,75 @@
+.bannerImgDropzone {
+    border: 2px dashed #696868;
+    border-radius: 5px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.bannerImgDropzone.dragging {
+    border-color: #4CAF50;
+    background-color: #e8f5e9;
+}
+
+.bannerImgDropzone.hasImage {
+    min-height: 300px;
+}
+
+.imageOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.imageOverlay p {
+    color: white;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.bannerImgDropzone:hover .imageOverlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bannerImgDropzone:hover .imageOverlay p {
+    opacity: 1;
+}
+
+.bannerImgLabel {
+    font-size: 1rem;
+    color: black;
+    margin: 0.5rem 0;
+    font-weight: 600;
+}
+
+.uploadIcon {
+    background-image: url('../assets/upload.svg');
+    background-size: contain;
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: 1rem;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.bannerImgInput {
+    display: none;
+}

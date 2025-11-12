@@ -1,0 +1,78 @@
+.accessBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 0 2rem;
+    padding-bottom: 2rem;
+}
+
+.accessContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6f7f8;
+}
+
+.formBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.formBox label {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+.formBox input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-top: 0.2rem;
+}
+
+.formBox input::placeholder {
+    color: #aaa;
+    font-family: 'Newsreader', 'Georgia', 'Cambria', 'Times New Roman', serif;
+}
+
+.formBox button {
+    margin-top: 1rem;
+    padding: 0.7rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    background-color: #137fec;
+    color: white;
+    cursor: pointer;
+    font-family: 'Newsreader', 'Georgia', 'Cambria', 'Times New Roman', serif;
+}
+
+.accessBox h1 {
+    margin: 1.5rem 0;
+}
+
+.accessBox label {
+    margin-top: 1rem;
+}
+
+.error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.success {
+    color: green;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}

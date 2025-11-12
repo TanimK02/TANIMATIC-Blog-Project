@@ -1,0 +1,10 @@
+.contentContainer {
+    margin-top: 2rem;
+}
+
+.contentLabel {
+    font-size: 1rem;
+    color: black;
+    margin: 0.5rem 0;
+    font-weight: 600;
+}
