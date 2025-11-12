@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { requireUser, requireAdmin } from "../middleware/auth";
+import { requireUser, requireAdmin } from "../middleware/auth.js";
 import { body, validationResult } from "express-validator";
 import prisma from "../model/prisma.js";
 import multer from "multer";
