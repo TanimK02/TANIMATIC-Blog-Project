@@ -16,15 +16,15 @@ const axiosAuth = axios.create({
 // USER
 // --------------------
 export const signUp = async (userData) => {
-    return axios.post(`${API_BASE}/user/sign-up`, userData);
+    return axios.post(`${API_BASE}/users/sign-up`, userData);
 };
 
 export const loginUser = async (userData) => {
-    return axios.post(`${API_BASE}/user/login`, userData);
+    return axios.post(`${API_BASE}/users/login`, userData);
 };
 
 export const getCurrentUser = async () => {
-    return axiosAuth.get("/user/me");
+    return axiosAuth.get("/users/me");
 };
 
 
@@ -43,19 +43,19 @@ export const getSinglePost = async (id) => {
 // COMMENTS
 // --------------------
 export const getComments = async (postId, page = 1) => {
-    return axios.get(`${API_BASE}/comment/${postId}/${page}`);
+    return axios.get(`${API_BASE}/comments/${postId}/${page}`);
 };
 
 export const createComment = async (postId, content) => {
-    return axiosAuth.post(`/comment/${postId}`, { content });
+    return axiosAuth.post(`/comments/${postId}`, { content });
 };
 
 export const updateComment = async (commentId, content) => {
-    return axiosAuth.put(`/comment/${commentId}`, { content });
+    return axiosAuth.put(`/comments/${commentId}`, { content });
 };
 
 export const deleteComment = async (commentId) => {
-    return axiosAuth.delete(`/comment/${commentId}`);
+    return axiosAuth.delete(`/comments/${commentId}`);
 };
 
 // --------------------
