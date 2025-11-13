@@ -15,6 +15,7 @@ export default function Login({ styles }) {
             <button onClick={() => {
                 const isLoggedIn = login({ username, password });
                 if (isLoggedIn) {
+                    console.log("Login successful");
                     navigate("/admin", { replace: true });
                 }
             }}>Login</button>

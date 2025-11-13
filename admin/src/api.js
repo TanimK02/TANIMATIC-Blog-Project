@@ -20,6 +20,7 @@ export const signUp = async (userData) => {
 };
 
 export const loginUser = async (userData) => {
+    alert("API.js loginUser called");
     return axios.post(`${API_BASE}/users/login`, userData);
 };
 

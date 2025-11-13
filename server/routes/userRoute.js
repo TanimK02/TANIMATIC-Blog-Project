@@ -54,10 +54,12 @@ userRouter.post("/login", [
     }
     passport.authenticate("local", { session: false }, (err, user, info) => {
         if (err) {
-            return next(err);
+            console.error("Login authentication error:", err);
+            return res.status(500).json({ error: "Internal server error" });
         }
         if (!user) {
-            return res.status(401).json({ message: "Invalid credentials" });
+            console.log("Login failed:", info?.message || "Invalid credentials");
+            return res.status(401).json({ message: info?.message || "Invalid credentials" });
         }
         const payload = { id: user.id, username: user.username };
         const userReturn = { id: user.id, username: user.username, admin: user.admin };

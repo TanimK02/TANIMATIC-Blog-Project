@@ -1,6 +1,8 @@
 import { createContext, useState, useContext } from 'react';
-const AuthContext = createContext();
 import { loginUser, signUp as signUpRoute, getCurrentUser } from '../api.js';
+
+const AuthContext = createContext(null);
+
 export function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState({ admin: false });
@@ -78,5 +80,9 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-    return useContext(AuthContext);
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
 }

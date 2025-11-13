@@ -15,7 +15,7 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(passport.initialize());
-
+app.set("trust proxy", 1);
 app.use("/users", userRouter);
 app.use("/admin", adminRouter);
 app.use("/posts", postsRouter);
