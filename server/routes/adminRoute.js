@@ -103,7 +103,7 @@ adminRouter.get("/posts/:page", requireUser, requireAdmin, async (req, res) => {
     }
 });
 
-adminRouter.get("/posts/:id", requireUser, requireAdmin, async (req, res) => {
+adminRouter.get("/post/:id", requireUser, requireAdmin, async (req, res) => {
     const postId = parseInt(req.params.id);
     try {
         const post = await prisma.post.findUnique({
@@ -122,7 +122,7 @@ adminRouter.get("/posts/:id", requireUser, requireAdmin, async (req, res) => {
     }
 });
 
-adminRouter.delete("/posts/:id", requireUser, requireAdmin, async (req, res) => {
+adminRouter.delete("/post/:id", requireUser, requireAdmin, async (req, res) => {
     const postId = parseInt(req.params.id);
     try {
         await prisma.post.delete({
@@ -138,7 +138,7 @@ adminRouter.delete("/posts/:id", requireUser, requireAdmin, async (req, res) => 
     }
 });
 
-adminRouter.put("/posts/:id/publish", requireUser, requireAdmin, async (req, res) => {
+adminRouter.put("/post/:id/publish", requireUser, requireAdmin, async (req, res) => {
     const postId = parseInt(req.params.id);
     try {
         const post = await prisma.post.update({
@@ -158,7 +158,7 @@ adminRouter.put("/posts/:id/publish", requireUser, requireAdmin, async (req, res
     }
 });
 
-adminRouter.put("/posts/:id/unpublish", requireUser, requireAdmin, async (req, res) => {
+adminRouter.put("/post/:id/unpublish", requireUser, requireAdmin, async (req, res) => {
     const postId = parseInt(req.params.id);
     try {
         const post = await prisma.post.update({
@@ -210,7 +210,7 @@ adminRouter.post("/posts", requireUser, requireAdmin, upload.single("bannerImg")
     }
 });
 
-adminRouter.put("/posts/:id", requireUser, requireAdmin, upload.single("bannerImg"), fileChecker, [
+adminRouter.put("/post/:id", requireUser, requireAdmin, upload.single("bannerImg"), fileChecker, [
     body("title").notEmpty().withMessage("Title is required"),
     body("tags").isArray({
         max: 5

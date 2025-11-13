@@ -6,11 +6,11 @@ import PostTitle from './PostTitle/PostTitle.jsx';
 import Content from './Content/Content.jsx';
 import Tags from './Tags/Tags.jsx';
 import PublishToggle from './PublishToggle/PublishToggle.jsx';
-import { useState, useCallback, useRef } from 'react';
-import { createPost, publishPost, unpublishPost } from '../api.js';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { createPost, publishPost, unpublishPost, getAdminPost } from '../api.js';
 import { useNavigate } from 'react-router-dom';
-
-export default function CreatePost({ postId = null, initialTitle = "", initialContent = "", initialTags = [], initialBannerImg = '', initialPublished = false }) {
+import { useParams } from 'react-router-dom';
+export default function CreatePost({ initialTitle = "", initialContent = "", initialTags = [], initialBannerImg = '', initialPublished = false }) {
     const [title, setTitle] = useState(initialTitle);
     const contentRef = useRef(initialContent);
     const [tags, setTags] = useState(initialTags);
@@ -18,6 +18,25 @@ export default function CreatePost({ postId = null, initialTitle = "", initialCo
     const [isPublished, setIsPublished] = useState(initialPublished);
     const [isSaving, setIsSaving] = useState(false);
     const navigate = useNavigate();
+    const postId = useParams().postId || null;
+    useEffect(() => {
+        if (postId) {
+            getAdminPost(postId).then((response) => {
+                console.log("Fetched post data for editing:", response);
+                if (response.status === 200) {
+                    const post = response.data.post;
+                    setTitle(post.title);
+                    contentRef.current = post.content;
+                    setTags(post.tags || []);
+                    setBannerImg(post.bannerImg || '');
+                    setIsPublished(post.isPublished || false);
+                }
+            }).catch((error) => {
+                console.error("Error fetching post data:", error);
+                alert("Failed to load post data for editing.");
+            });
+        }
+    }, [postId]);
 
     const handleImageChange = useCallback((image) => {
         setBannerImg(image);
@@ -71,7 +90,7 @@ export default function CreatePost({ postId = null, initialTitle = "", initialCo
             console.log("Create post response:", response);
 
             if (response.status === 201) {
-                const newPostId = response.data.post.id;
+                const newPostId = response.data.postId;
 
                 // Handle publish/unpublish
                 if (isPublished) {

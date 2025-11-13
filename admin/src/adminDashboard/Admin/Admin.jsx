@@ -26,10 +26,10 @@ export default function Admin() {
             console.log("Loading posts for page:", page);
             const response = await getAdminPosts(page);
             console.log("Posts response:", response);
-            console.log("Posts data:", response.data);
+            console.log("Posts data:", response.data.posts);
             if (response.status === 200) {
-                setPosts(response.data || []);
-                setHasMore(response.data.length >= 10); // Assume 10 posts per page
+                setPosts(response.data.posts || []);
+                setHasMore(response.data.posts.length >= 10); // Assume 10 posts per page
             }
         } catch (error) {
             console.error("Error loading posts:", error);
@@ -107,7 +107,6 @@ export default function Admin() {
                             updated={new Date(post.updatedAt).toLocaleDateString()}
                             id={post.id}
                             onDelete={() => handleDelete(post.id)}
-                            onTogglePublish={() => handleTogglePublish(post.id, post.published)}
                         />
                     ))
                 )}

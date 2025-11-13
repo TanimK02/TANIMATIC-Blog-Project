@@ -40,7 +40,15 @@ function App() {
           <CreatePost />
         </ProtectedRoute>
       )
-    }
+    },
+    {
+      path: '/create-post/:postId',
+      element: (
+        <ProtectedRoute requireAdmin={true}>
+          <CreatePost />
+        </ProtectedRoute>
+      )
+    },
   ]);
   return (
     <>

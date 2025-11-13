@@ -1,5 +1,17 @@
+import { useNavigate } from "react-router-dom";
+export default function PostBox({ key,
+    styles,
+    title,
+    status,
+    updated,
+    id,
+    onDelete,
+}) {
 
-export default function PostBox({ styles, title, status, updated, id }) {
+    const navigate = useNavigate();
+    function handleEdit() {
+        navigate(`/create-post/${id}`);
+    };
     return (
         <div className={styles.postBox}>
             <p>{title}</p>
@@ -7,8 +19,8 @@ export default function PostBox({ styles, title, status, updated, id }) {
             <p>{updated}</p>
             <div className={styles.postBoxButtons}>
                 <button className={styles.viewButton} ></button>
-                <button className={styles.editButton}></button>
-                <button className={styles.deleteButton}></button>
+                <button onClick={handleEdit} className={styles.editButton}></button>
+                <button onClick={onDelete} className={styles.deleteButton}></button>
             </div>
         </div>
     );
