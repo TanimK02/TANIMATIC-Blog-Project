@@ -17,16 +17,21 @@ export default function CreatePost({ initialTitle = "", initialContent = "", ini
     const [bannerImg, setBannerImg] = useState(initialBannerImg);
     const [isPublished, setIsPublished] = useState(initialPublished);
     const [isSaving, setIsSaving] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [loadedContent, setLoadedContent] = useState(initialContent);
     const navigate = useNavigate();
     const postId = useParams().postId || null;
+
     useEffect(() => {
         if (postId) {
+            setIsLoading(true);
             getAdminPost(postId).then((response) => {
                 console.log("Fetched post data for editing:", response);
                 if (response.status === 200) {
                     const post = response.data.post;
                     setTitle(post.title);
                     contentRef.current = post.content;
+                    setLoadedContent(post.content); // Set loaded content for TinyMCE
                     setTags(post.tags || []);
                     setBannerImg(post.bannerImg || '');
                     setIsPublished(post.isPublished || false);
@@ -34,6 +39,8 @@ export default function CreatePost({ initialTitle = "", initialContent = "", ini
             }).catch((error) => {
                 console.error("Error fetching post data:", error);
                 alert("Failed to load post data for editing.");
+            }).finally(() => {
+                setIsLoading(false);
             });
         }
     }, [postId]);
@@ -96,6 +103,9 @@ export default function CreatePost({ initialTitle = "", initialContent = "", ini
                 if (isPublished) {
                     await publishPost(newPostId);
                 }
+                else {
+                    await unpublishPost(newPostId);
+                }
 
                 alert("Post created successfully!");
                 navigate('/admin');
@@ -118,16 +128,22 @@ export default function CreatePost({ initialTitle = "", initialContent = "", ini
                 <button
                     className={styles.saveButton}
                     onClick={handleSave}
-                    disabled={isSaving}
+                    disabled={isSaving || isLoading}
                 >
                     {isSaving ? 'Saving...' : 'Save Post'}
                 </button>
             </div>
-            <ImageDropzone initialImage={bannerImg} onImageChange={handleImageChange} />
-            <PostTitle title={title} onTitleChange={handleTitleChange} />
-            <Content initialContent={initialContent} onContentChange={handleContentChange} />
-            <Tags initialTags={tags} onTagsChange={handleTagsChange} />
-            <PublishToggle initialPublished={isPublished} onPublishChange={handlePublishChange} />
+            {isLoading ? (
+                <div>Loading post data...</div>
+            ) : (
+                <>
+                    <ImageDropzone initialImage={bannerImg} onImageChange={handleImageChange} />
+                    <PostTitle title={title} onTitleChange={handleTitleChange} />
+                    <Content initialContent={loadedContent} onContentChange={handleContentChange} />
+                    <Tags initialTags={tags} onTagsChange={handleTagsChange} />
+                    <PublishToggle initialPublished={isPublished} onPublishChange={handlePublishChange} />
+                </>
+            )}
         </div>
     );
 }

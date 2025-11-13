@@ -94,7 +94,10 @@ adminRouter.get("/posts/:page", requireUser, requireAdmin, async (req, res) => {
                 authorId: req.user.id
             },
             skip,
-            take: pageSize
+            take: pageSize,
+            include: {
+                tags: true
+            }
         });
         res.json({ posts });
     }
@@ -110,6 +113,9 @@ adminRouter.get("/post/:id", requireUser, requireAdmin, async (req, res) => {
             where: {
                 id: postId,
                 authorId: req.user.id
+            },
+            include: {
+                tags: true
             }
         });
         if (!post) {

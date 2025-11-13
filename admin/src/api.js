@@ -81,7 +81,7 @@ export const getAdminPosts = async (page = 1) => {
 };
 
 export const getAdminPost = async (id) => {
-    return axiosAuth.get(`/admin/posts/${id}`);
+    return axiosAuth.get(`/admin/post/${id}`);
 };
 
 export const createPost = async ({ title, content, tags = [], bannerImg }) => {
@@ -106,21 +106,21 @@ export const updatePost = async (id, { title, content, tags = [], bannerImg }) =
     tags.forEach((tag) => formData.append("tags[]", tag));
     if (bannerImg) formData.append("bannerImg", bannerImg);
 
-    return axiosAuth.put(`/admin/posts/${id}`, formData, {
+    return axiosAuth.put(`/admin/post/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
     });
 };
 
 export const deletePost = async (id) => {
-    return axiosAuth.delete(`/admin/posts/${id}`);
+    return axiosAuth.delete(`/admin/post/${id}`);
 };
 
 export const publishPost = async (id) => {
-    return axiosAuth.put(`/admin/posts/${id}/publish`);
+    return axiosAuth.put(`/admin/post/${id}/publish`);
 };
 
 export const unpublishPost = async (id) => {
-    return axiosAuth.put(`/admin/posts/${id}/unpublish`);
+    return axiosAuth.put(`/admin/post/${id}/unpublish`);
 };
 
 export const uploadImage = async (imageFile) => {
