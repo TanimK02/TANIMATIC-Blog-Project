@@ -32,6 +32,14 @@ userRouter.post("/sign-up", [
         const token = jwt.sign(payload, process.env.JWT_SECRET || "default_secret_key", { expiresIn: '1 day' });
         res.status(201).json({ message: "User registered successfully", user, token });
     } catch (error) {
+        console.error("Sign-up error:", error);
+
+        // Handle unique constraint violation
+        if (error.code === 'P2002') {
+            const field = error.meta?.target?.[0] || 'field';
+            return res.status(400).json({ error: `${field} already exists` });
+        }
+
         res.status(500).json({ error: "Internal server error" });
     }
 
