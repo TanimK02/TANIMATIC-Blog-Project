@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import styles from './LoginSign.module.css';
 import { useAuth } from "../provider/AuthProvider.jsx";
 import { useNavigate } from "react-router-dom";
+
 function LoginSign() {
     const [isLogin, setIsLogin] = useState(true);
     const { isAuthenticated, isAdmin } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
+        // If already authenticated and admin, redirect to admin dashboard
         if (isAuthenticated && isAdmin) {
             navigate("/admin", { replace: true });
         }

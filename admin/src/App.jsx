@@ -1,10 +1,12 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 
 import LoginSign from './loginSignUp/LoginSign.jsx'
 import Admin from './adminDashboard/Admin/Admin.jsx'
 import Access from './adminAccess/Access.jsx'
 import CreatePost from './createPost/CreatePost.jsx'
 import { AuthProvider } from './provider/AuthProvider.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -13,11 +15,19 @@ function App() {
     },
     {
       path: '/',
-      element: <Admin />
+      element: (
+        <ProtectedRoute requireAdmin={true}>
+          <Admin />
+        </ProtectedRoute>
+      )
     },
     {
       path: '/admin',
-      element: <Admin />
+      element: (
+        <ProtectedRoute requireAdmin={true}>
+          <Admin />
+        </ProtectedRoute>
+      )
     },
     {
       path: '/access',
@@ -25,7 +35,11 @@ function App() {
     },
     {
       path: '/create-post',
-      element: <CreatePost />
+      element: (
+        <ProtectedRoute requireAdmin={true}>
+          <CreatePost />
+        </ProtectedRoute>
+      )
     }
   ]);
   return (

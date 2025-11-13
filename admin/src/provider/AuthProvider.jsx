@@ -1,75 +1,106 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, use } from 'react';
 import { loginUser, signUp as signUpRoute, getCurrentUser } from '../api.js';
-
+import { useEffect } from 'react';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState({ admin: false });
+    const [user, setUser] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            getCurrentUserInfo();
+        } else {
+            setLoading(false);
+        }
+    }, []);
 
     async function login(userData) {
-        const response = await loginUser(userData);
-        if (response.status === 200) {
-            setIsAuthenticated(true);
-            setUser(response.data.user);
-            if (response.data.user.admin) {
-                setIsAdmin(true);
+        try {
+            const response = await loginUser(userData);
+            if (response.status === 200) {
+                localStorage.setItem("token", response.data.token);
+                setIsAuthenticated(true);
+                setUser(response.data.user);
+                setIsAdmin(response.data.user.admin || false);
+                return true;
+            } else if (response.status === 400) {
+                alert("Login failed. Please check your credentials.");
+                return false;
+            } else if (response.status === 500) {
+                alert("Server error. Please try again later.");
+                return false;
             }
-        } else if (response.status === 400) {
-            alert("Login failed. Please check your credentials.");
-        } else if (response.status === 500) {
-            alert("Server error. Please try again later.");
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("Login failed. Please try again.");
+            return false;
         }
-        return response.status === 200;
     }
 
     async function signUp(userData) {
-        const response = await signUpRoute(userData);
-        if (response.status === 200) {
-            setIsAuthenticated(true);
-            setUser(response.data.user);
-            if (response.data.user.admin) {
-                setIsAdmin(true);
+        try {
+            const response = await signUpRoute(userData);
+            if (response.status === 200) {
+                localStorage.setItem("token", response.data.token);
+                setIsAuthenticated(true);
+                setUser(response.data.user);
+                setIsAdmin(response.data.user.admin || false);
+                return true;
+            } else if (response.status === 400) {
+                alert("Sign up failed. Please check your input.");
+                return false;
+            } else if (response.status === 500) {
+                alert("Server error. Please try again later.");
+                return false;
             }
-        } else if (response.status === 400) {
-            alert("Sign up failed. Please check your input.");
+        } catch (error) {
+            console.error("Sign up error:", error);
+            alert("Sign up failed. Please try again.");
+            return false;
         }
-        else if (response.status === 500) {
-            alert("Server error. Please try again later.");
-        }
-        return response.status === 200;
     }
 
     async function getCurrentUserInfo() {
-        const response = await getCurrentUser();
-        if (response.status === 200) {
-            setUser(response.data.user);
-            setIsAuthenticated(true);
-            if (response.data.user.admin) {
-                setIsAdmin(true);
+        try {
+            const response = await getCurrentUser();
+            if (response.status === 200) {
+                setUser(response.data.user);
+                setIsAuthenticated(true);
+                setIsAdmin(response.data.user.admin || false);
+                setLoading(false);
+                return true;
+            } else if (response.status === 401) {
+                localStorage.removeItem("token");
+                setIsAuthenticated(false);
+                setUser(null);
+                setIsAdmin(false);
+                setLoading(false);
+                return false;
             }
-        }
-        else if (response.status === 401) {
+        } catch (error) {
+            console.error("Get current user error:", error);
+            localStorage.removeItem("token");
             setIsAuthenticated(false);
-            setUser({ admin: false });
-            alert("Invalid or expired token. Please log in again.");
+            setUser(null);
+            setIsAdmin(false);
+            setLoading(false);
+            return false;
         }
-        else if (response.status === 404) {
-            alert("User not found.");
-        }
-        else if (response.status === 500) {
-            alert("Server error. Please try again later.");
-        }
-        return response.status === 200;
     }
 
     function logout() {
-        if (isAuthenticated) {
-            localStorage.removeItem("token");
-            setIsAuthenticated(false);
-            setUser({ admin: false });
-        }
+        localStorage.removeItem("token");
+        setIsAuthenticated(false);
+        setUser(null);
+        setIsAdmin(false);
+    }
+
+    if (loading) {
+        return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>;
     }
 
     return (

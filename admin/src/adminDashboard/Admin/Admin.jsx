@@ -5,11 +5,11 @@ import { useState } from 'react';
 import { useAuth } from '../../provider/AuthProvider.jsx';
 import { Navigate } from 'react-router-dom';
 export default function Admin() {
-    const { isAuthenticated, user } = useAuth();
+    const { isAuthenticated, isAdmin } = useAuth();
     if (!isAuthenticated) {
         return <Navigate to="/login" replace={true} />;
     }
-    if (!user.isAdmin) {
+    if (!isAdmin) {
         return <Navigate to="/access" replace={true} />;
     }
 

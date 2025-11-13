@@ -3,12 +3,12 @@ import { useState } from "react";
 import { useAuth } from '../provider/AuthProvider.jsx';
 import { useNavigate, Navigate } from 'react-router-dom';
 export default function Access() {
-    const { isAuthenticated, authorizeAdmin, user } = useAuth();
+    const { isAuthenticated, isAdmin } = useAuth();
     const navigate = useNavigate();
     if (!isAuthenticated) {
         return <Navigate to="/login" replace={true} />;
     }
-    if (user && user.isAdmin) {
+    if (isAdmin) {
         return <Navigate to="/admin" replace={true} />;
     } else {
 
@@ -24,7 +24,6 @@ export default function Access() {
                         <input type="password" placeholder="Enter access code" />
                         <button onClick={() => {
                             if (true) {
-                                authorizeAdmin();
                                 setSuccess(true);
                                 navigate("/admin");
                             } else {
