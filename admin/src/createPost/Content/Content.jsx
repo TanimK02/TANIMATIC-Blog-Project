@@ -1,15 +1,11 @@
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import styles from './content.module.css';
 import { uploadImage } from '../../api.js';
 
-export default function Content({ initialContent = '', onContentChange }) {
+function Content({ initialContent = '', onContentChange }) {
 
     const editorRef = useRef(null);
-
-    function handleContentChange(content) {
-        onContentChange(content);
-    }
 
     return (
         <div className={styles.contentContainer}>
@@ -46,7 +42,7 @@ export default function Content({ initialContent = '', onContentChange }) {
                         }
                     }}
                     initialValue={initialContent || 'Write your post content here...'}
-                    onEditorChange={handleContentChange}
+                    onEditorChange={(content) => onContentChange(content)}
                     onInit={(evt, editor) => { editorRef.current = editor; }}
                 />
 
@@ -54,3 +50,5 @@ export default function Content({ initialContent = '', onContentChange }) {
         </div>
     );
 }
+
+export default memo(Content);

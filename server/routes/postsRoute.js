@@ -14,7 +14,7 @@ postsRouter.get("/page/:page", async (req, res) => {
             orderBy: { publicationDate: 'desc' },
             include: { tags: true }
         });
-        res.json(posts);
+        res.json({ posts });
     } catch (error) {
         res.status(500).json({ error: "Internal server error" });
     }
@@ -30,7 +30,7 @@ postsRouter.get("/posts/:id", async (req, res) => {
         if (!post) {
             return res.status(404).json({ error: "Post not found" });
         }
-        res.json(post);
+        res.json({ post });
     } catch (error) {
         res.status(500).json({ error: "Internal server error" });
     }

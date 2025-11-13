@@ -41,7 +41,7 @@ commentRouter.post("/:postId", requireUser, [
                 authorId: req.user.id
             }
         });
-        res.json(comment);
+        res.json({ comment });
     } catch (error) {
         res.status(500).json({ error: "Internal server error" });
     }
@@ -85,7 +85,7 @@ commentRouter.put("/:commentId", requireUser, [
                 content
             }
         });
-        res.json(updatedComment);
+        res.json({ updatedComment });
     } catch (error) {
         res.status(500).json({ error: "Internal server error" });
     }

@@ -13,7 +13,7 @@ export default function ImageDropzone({ initialImage = '', onImageChange }) {
             reader.onloadend = () => {
                 setUploadedImage(reader.result);
                 if (onImageChange) {
-                    onImageChange(reader.result);
+                    onImageChange(file); // Pass the File object, not base64
                 }
             };
             reader.readAsDataURL(file);
@@ -44,7 +44,7 @@ export default function ImageDropzone({ initialImage = '', onImageChange }) {
             reader.onloadend = () => {
                 setUploadedImage(reader.result);
                 if (onImageChange) {
-                    onImageChange(reader.result);
+                    onImageChange(file); // Pass the File object, not base64
                 }
             };
             reader.readAsDataURL(file);

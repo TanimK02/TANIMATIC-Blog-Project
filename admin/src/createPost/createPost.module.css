@@ -3,8 +3,36 @@
     padding-bottom: 8rem;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
 .title {
-    margin: 1rem 0;
+    margin: 0;
+}
+
+.saveButton {
+    padding: 0.75rem 2rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.saveButton:hover {
+    background-color: #45a049;
+}
+
+.saveButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .bannerImgLabel {

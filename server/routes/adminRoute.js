@@ -96,7 +96,7 @@ adminRouter.get("/posts/:page", requireUser, requireAdmin, async (req, res) => {
             skip,
             take: pageSize
         });
-        res.json(posts);
+        res.json({ posts });
     }
     catch (error) {
         res.status(500).json({ error: "Internal server error" });
@@ -115,7 +115,7 @@ adminRouter.get("/posts/:id", requireUser, requireAdmin, async (req, res) => {
         if (!post) {
             return res.status(404).json({ error: "Post not found" });
         }
-        res.json(post);
+        res.json({ post });
     }
     catch (error) {
         res.status(500).json({ error: "Internal server error" });

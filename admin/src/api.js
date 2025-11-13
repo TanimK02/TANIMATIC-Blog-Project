@@ -1,27 +1,37 @@
 // api.js
 import axios from "axios";
 
-const API_BASE = "https://tanimatic-blog-project.onrender.com"; // change to your backend URL
+const API_BASE = "https://tanimatic-blog-project.onrender.com"; // Backend URL
 
-// Get token from localStorage
-const getToken = () => localStorage.getItem("token");
+// Axios instance without auth
+const axiosPublic = axios.create({
+    baseURL: API_BASE,
+});
 
-// Axios instance with auth
+// Axios instance with auth - dynamically get token for each request
 const axiosAuth = axios.create({
     baseURL: API_BASE,
-    headers: { Authorization: `Bearer ${getToken()}` },
+});
+
+// Add token to each authenticated request
+axiosAuth.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    console.log("Attaching token:", token ? `${token.substring(0, 20)}...` : 'NO TOKEN');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
 });
 
 // --------------------
 // USER
 // --------------------
 export const signUp = async (userData) => {
-    return axios.post(`${API_BASE}/users/sign-up`, userData);
+    return axiosPublic.post("/users/sign-up", userData);
 };
 
 export const loginUser = async (userData) => {
-    alert("API.js loginUser called");
-    return axios.post(`${API_BASE}/users/login`, userData);
+    return axiosPublic.post("/users/login", userData);
 };
 
 export const getCurrentUser = async () => {
@@ -33,18 +43,18 @@ export const getCurrentUser = async () => {
 // POSTS (PUBLIC)
 // --------------------
 export const getPublishedPosts = async (page = 1) => {
-    return axios.get(`${API_BASE}/posts/page/${page}`);
+    return axiosPublic.get(`/posts/page/${page}`);
 };
 
 export const getSinglePost = async (id) => {
-    return axios.get(`${API_BASE}/posts/posts/${id}`);
+    return axiosPublic.get(`/posts/posts/${id}`);
 };
 
 // --------------------
 // COMMENTS
 // --------------------
 export const getComments = async (postId, page = 1) => {
-    return axios.get(`${API_BASE}/comments/${postId}/${page}`);
+    return axiosPublic.get(`/comments/${postId}/${page}`);
 };
 
 export const createComment = async (postId, content) => {
@@ -79,6 +89,9 @@ export const createPost = async ({ title, content, tags = [], bannerImg }) => {
     formData.append("title", title);
     formData.append("content", content);
     tags.forEach((tag) => formData.append("tags[]", tag));
+    if (tags.length < 1) {
+        formData.append("tags[]", "");
+    }
     if (bannerImg) formData.append("bannerImg", bannerImg);
 
     return axiosAuth.post("/admin/posts", formData, {
