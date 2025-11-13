@@ -24,6 +24,6 @@ app.use("/comments", commentRouter);
 app.keepAliveTimeout = 61 * 1000;
 app.headersTimeout = 65 * 1000;
 
-app.listen(10000, '0.0.0.0', () => {
+app.listen(process.env.PORT || 10000, '0.0.0.0', () => {
     console.log("Server is running on http://localhost:10000/users/sign-up");
 });

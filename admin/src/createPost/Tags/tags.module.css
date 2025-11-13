@@ -83,3 +83,42 @@
     margin-top: 0.5rem;
     margin-bottom: 0;
 }
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tagsContainer {
+        padding: 1rem;
+    }
+
+    .label {
+        font-size: 0.95rem;
+    }
+
+    .tagInput {
+        font-size: 0.95rem;
+    }
+
+    .tag {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tagsContainer {
+        padding: 0.75rem;
+    }
+
+    .label {
+        font-size: 0.9rem;
+    }
+
+    .tagInput {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+
+    .tag {
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+    }
+}

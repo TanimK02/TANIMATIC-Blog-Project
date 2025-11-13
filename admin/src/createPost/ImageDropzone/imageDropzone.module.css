@@ -73,3 +73,27 @@
 .bannerImgInput {
     display: none;
 }
+/* Responsive Design */
+@media (max-width: 768px) {
+    .bannerImgDropzone {
+        height: 200px;
+    }
+
+    .bannerImgLabel {
+        font-size: 0.95rem;
+    }
+
+    .uploadText {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bannerImgDropzone {
+        height: 150px;
+    }
+
+    .uploadText {
+        font-size: 0.85rem;
+    }
+}

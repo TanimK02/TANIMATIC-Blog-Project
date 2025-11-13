@@ -1,0 +1,234 @@
+.viewPostContainer {
+    background-color: #f6f7f8;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.loading,
+.error {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.postContent {
+    width: 100%;
+    margin: 2rem auto;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 3rem;
+}
+
+.bannerImageContainer {
+    width: 100%;
+    margin-bottom: 2rem;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bannerImage {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #333;
+    font-family: "Newsreader", "Georgia", "Cambria", "Times New Roman", serif;
+    line-height: 1.2;
+}
+
+.content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 2rem;
+    font-family: "Newsreader", "Georgia", "Cambria", "Times New Roman", serif;
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.content p {
+    margin-bottom: 1rem;
+}
+
+.content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 1rem 0;
+}
+
+.content ul,
+.content ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.content li {
+    margin-bottom: 0.5rem;
+}
+
+.content blockquote {
+    border-left: 4px solid #4CAF50;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #666;
+    font-style: italic;
+}
+
+.content code {
+    background-color: #f4f4f4;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+}
+
+.content pre {
+    background-color: #f4f4f4;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.tagsContainer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.tagsLabel {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.backButton,
+.editButton {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: "Newsreader", "Georgia", "Cambria", "Times New Roman", serif;
+    transition: all 0.2s;
+}
+
+.backButton {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.backButton:hover {
+    background-color: #ccc;
+}
+
+.editButton {
+    background-color: #137fec;
+    color: white;
+}
+
+.editButton:hover {
+    background-color: #0d6ecc;
+}
+
+.backButton:active,
+.editButton:active {
+    transform: scale(0.98);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .viewPostContainer {
+        padding: 1rem;
+    }
+
+    .postContent {
+        padding: 2rem 1.5rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .content {
+        font-size: 1rem;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .backButton,
+    .editButton {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .viewPostContainer {
+        padding: 0.5rem;
+    }
+
+    .postContent {
+        padding: 1.5rem 1rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .content {
+        font-size: 0.95rem;
+    }
+
+    .bannerImage {
+        max-height: 250px;
+    }
+
+    .tag {
+        font-size: 0.85rem;
+        padding: 0.3rem 0.6rem;
+    }
+}

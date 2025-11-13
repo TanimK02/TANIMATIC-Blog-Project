@@ -51,3 +51,80 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .createPostContainer {
+        padding: 1rem;
+        padding-bottom: 6rem;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .saveButton {
+        width: 100%;
+        padding: 0.65rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .createPostContainer {
+        padding: 0.5rem;
+        padding-bottom: 5rem;
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .saveButton {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .createPostContainer {
+        padding: 1rem;
+        padding-bottom: 6rem;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .saveButton {
+        width: 100%;
+        padding: 0.65rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .createPostContainer {
+        padding: 0.5rem;
+        padding-bottom: 5rem;
+    }
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .saveButton {
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+    }
+}

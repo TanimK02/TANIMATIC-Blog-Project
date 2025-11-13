@@ -7,7 +7,7 @@ import Content from './Content/Content.jsx';
 import Tags from './Tags/Tags.jsx';
 import PublishToggle from './PublishToggle/PublishToggle.jsx';
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { createPost, publishPost, unpublishPost, getAdminPost } from '../api.js';
+import { createPost, updatePost, publishPost, unpublishPost, getAdminPost } from '../api.js';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 export default function CreatePost({ initialTitle = "", initialContent = "", initialTags = [], initialBannerImg = '', initialPublished = false }) {
@@ -38,12 +38,19 @@ export default function CreatePost({ initialTitle = "", initialContent = "", ini
                 }
             }).catch((error) => {
                 console.error("Error fetching post data:", error);
-                alert("Failed to load post data for editing.");
+                if (error.response?.status === 404) {
+                    navigate('/404');
+                } else if (error.response?.status === 401) {
+                    navigate('/401');
+                } else {
+                    alert("Failed to load post data for editing.");
+                    navigate('/admin');
+                }
             }).finally(() => {
                 setIsLoading(false);
             });
         }
-    }, [postId]);
+    }, [postId, navigate]);
 
     const handleImageChange = useCallback((image) => {
         setBannerImg(image);
@@ -78,43 +85,55 @@ export default function CreatePost({ initialTitle = "", initialContent = "", ini
 
         setIsSaving(true);
         try {
+            // Ensure tags are strings, not objects
+            const tagStrings = tags.map(tag =>
+                typeof tag === 'string' ? tag : tag?.name || ''
+            ).filter(tag => tag);
+
             const postData = {
                 title,
                 content: contentRef.current,
-                tags,
+                tags: tagStrings,
                 bannerImg
             };
 
-            console.log("Creating post with data:", {
+            console.log(postId ? "Updating post" : "Creating post", "with data:", {
                 title,
                 contentLength: contentRef.current?.length,
-                tagsCount: tags.length,
+                tags: tagStrings,
                 hasBannerImg: !!bannerImg
             });
 
-            const response = await createPost(postData);
+            let response;
+            if (postId) {
+                // Update existing post
+                response = await updatePost(postId, postData);
+            } else {
+                // Create new post
+                response = await createPost(postData);
+            }
 
-            console.log("Create post response:", response);
+            console.log("Post response:", response);
 
-            if (response.status === 201) {
-                const newPostId = response.data.postId;
+            if (response.status === 200 || response.status === 201) {
+                const resultPostId = postId || response.data.postId;
 
                 // Handle publish/unpublish
                 if (isPublished) {
-                    await publishPost(newPostId);
+                    await publishPost(resultPostId);
                 }
                 else {
-                    await unpublishPost(newPostId);
+                    await unpublishPost(resultPostId);
                 }
 
-                alert("Post created successfully!");
-                navigate('/admin');
+                alert(postId ? "Post updated successfully!" : "Post created successfully!");
+                navigate(`/create-post/${resultPostId}`);
             }
         } catch (error) {
-            console.error("Error creating post:", error);
+            console.error("Error saving post:", error);
             console.error("Error response:", error.response?.data);
             console.error("Error status:", error.response?.status);
-            alert(`Failed to create post: ${error.response?.data?.message || error.message}`);
+            alert(`Failed to save post: ${error.response?.data?.message || error.message}`);
         } finally {
             setIsSaving(false);
         }

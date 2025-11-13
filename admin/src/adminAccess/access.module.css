@@ -76,3 +76,52 @@
     font-size: 0.9rem;
     margin-top: 0.5rem;
 }
+/* Responsive Design */
+@media (max-width: 768px) {
+    .accessContainer {
+        width: 70%;
+        padding: 2rem 1.5rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .label {
+        font-size: 1rem;
+    }
+
+    .input {
+        font-size: 0.95rem;
+    }
+
+    .submitBtn {
+        font-size: 0.95rem;
+        padding: 0.65rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .accessContainer {
+        width: 90%;
+        padding: 1.5rem 1rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .label {
+        font-size: 0.95rem;
+    }
+
+    .input {
+        font-size: 0.9rem;
+        padding: 0.45rem;
+    }
+
+    .submitBtn {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+}

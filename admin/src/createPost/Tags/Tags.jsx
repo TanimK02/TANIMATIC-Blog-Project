@@ -1,9 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './tags.module.css';
 
 export default function Tags({ initialTags = [], onTagsChange }) {
-    const [tags, setTags] = useState(initialTags);
+    const [tags, setTags] = useState([]);
     const [inputValue, setInputValue] = useState('');
+
+    // Normalize tags whenever initialTags changes
+    useEffect(() => {
+        console.log("Initial tags received:", initialTags);
+        const normalizedTags = initialTags.map(tag => {
+            console.log("Processing tag:", tag, "type:", typeof tag);
+            return typeof tag === 'string' ? tag : tag?.name || '';
+        }).filter(tag => tag); // Remove empty strings
+        console.log("Normalized tags:", normalizedTags);
+        setTags(normalizedTags);
+    }, [initialTags]);
 
     function handleKeyDown(e) {
         if (e.key === 'Enter' && inputValue.trim()) {

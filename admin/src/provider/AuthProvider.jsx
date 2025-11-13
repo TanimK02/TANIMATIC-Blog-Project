@@ -74,6 +74,8 @@ export function AuthProvider({ children }) {
                 setLoading(false);
                 return true;
             } else if (response.status === 401) {
+                // Only clear auth on 401 (unauthorized)
+                console.log("Token expired or invalid (401)");
                 localStorage.removeItem("token");
                 setIsAuthenticated(false);
                 setUser(null);
@@ -83,10 +85,17 @@ export function AuthProvider({ children }) {
             }
         } catch (error) {
             console.error("Get current user error:", error);
-            localStorage.removeItem("token");
-            setIsAuthenticated(false);
-            setUser(null);
-            setIsAdmin(false);
+            // Only clear auth if it's a 401 error, not network errors
+            if (error.response?.status === 401) {
+                console.log("Token expired or invalid (401 in catch)");
+                localStorage.removeItem("token");
+                setIsAuthenticated(false);
+                setUser(null);
+                setIsAdmin(false);
+            } else {
+                // For network errors, keep the user logged in
+                console.log("Network error, keeping user logged in");
+            }
             setLoading(false);
             return false;
         }

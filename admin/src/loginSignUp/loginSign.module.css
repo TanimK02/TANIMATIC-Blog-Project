@@ -101,3 +101,65 @@
 .underline {
     border-bottom: 2px solid #137fec;
 }
+/* Responsive Design */
+@media (max-width: 968px) {
+    .container {
+        width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 70%;
+        height: auto;
+        min-height: 60%;
+    }
+
+    .formContainer {
+        padding: 0 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .formBox label {
+        font-size: 1rem;
+    }
+
+    .formBox input {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+        height: auto;
+    }
+
+    .formContainer {
+        padding: 0 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+    }
+
+    .formBox label {
+        font-size: 0.95rem;
+    }
+
+    .formBox input {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+    }
+
+    .submitBtn {
+        font-size: 0.95rem;
+        padding: 0.6rem;
+    }
+
+    .switchTextContainer {
+        font-size: 0.9rem;
+    }
+}
