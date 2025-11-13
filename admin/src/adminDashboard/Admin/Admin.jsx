@@ -2,7 +2,17 @@ import styles from './admin.module.css';
 import Nav from './nav/Nav.jsx';
 import PostBox from './postBox/PostBox.jsx';
 import { useState } from 'react';
+import { useAuth } from '../../provider/AuthProvider.jsx';
+import { Navigate } from 'react-router-dom';
 export default function Admin() {
+    const { isAuthenticated, user } = useAuth();
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace={true} />;
+    }
+    if (!user.isAdmin) {
+        return <Navigate to="/access" replace={true} />;
+    }
+
     const [page, setPage] = useState(1);
     return (
         <div className={styles.adminContainer}>

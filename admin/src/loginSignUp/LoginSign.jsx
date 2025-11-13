@@ -1,10 +1,19 @@
 import Login from "./login/Login.jsx";
 import SignUp from "./signUp/SignUp.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from './LoginSign.module.css';
-
+import { useAuth } from "../provider/AuthProvider.jsx";
+import { useNavigate } from "react-router-dom";
 function LoginSign() {
     const [isLogin, setIsLogin] = useState(true);
+    const { isAuthenticated, isAdmin } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated && isAdmin) {
+            navigate("/admin", { replace: true });
+        }
+    }, [isAuthenticated, isAdmin, navigate]);
 
     return (
         <div className={styles.background}>
@@ -14,7 +23,9 @@ function LoginSign() {
                     <h2>Welcome Back</h2>
                     <div className={styles.buttonGroup}>
                         <div className={isLogin ? `${styles.underline} ${styles.buttonContainer}` : styles.buttonContainer}>
-                            <button onClick={() => setIsLogin(true)}>Login</button>
+                            <button onClick={() => {
+                                setIsLogin(true);
+                            }}>Login</button>
                         </div>
                         <div className={!isLogin ? `${styles.underline} ${styles.buttonContainer}` : styles.buttonContainer}>
                             <button onClick={() => setIsLogin(false)}>Sign Up</button>

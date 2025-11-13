@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import styles from './content.module.css';
-
+import { uploadImage } from '../../api.js';
 
 export default function Content({ initialContent = '', onContentChange }) {
 
@@ -35,8 +35,19 @@ export default function Content({ initialContent = '', onContentChange }) {
                         ],
                         ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
                         uploadcare_public_key: 'a56ad28a082245be5c3b',
+                        images_upload_handler: async (blobInfo, success, failure) => {
+                            try {
+                                const response = await uploadImage(blobInfo.blob());
+                                const imageUrl = response.data.imageUrl; // Adjust based on your API response
+                                success(imageUrl);
+                            } catch (error) {
+                                failure('Image upload failed: ' + error.message);
+                            }
+                        }
                     }}
-                    initialValue="Welcome to TinyMCE!"
+                    initialValue={initialContent || 'Write your post content here...'}
+                    onEditorChange={handleContentChange}
+                    onInit={(evt, editor) => { editorRef.current = editor; }}
                 />
 
             </div>
