@@ -52,9 +52,9 @@ userRouter.post("/login", [
             return res.status(401).json({ message: "Invalid credentials" });
         }
         const payload = { id: user.id, username: user.username };
-        const user = { id: user.id, username: user.username, admin: user.admin };
+        const userReturn = { id: user.id, username: user.username, admin: user.admin };
         const token = jwt.sign(payload, process.env.JWT_SECRET || "default_secret_key", { expiresIn: '1 day' });
-        res.json({ message: "User logged in successfully", user, token });
+        res.json({ message: "User logged in successfully", user: userReturn, token });
     })(req, res, next);
 });
 
