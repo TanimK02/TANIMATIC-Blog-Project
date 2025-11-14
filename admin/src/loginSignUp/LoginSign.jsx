@@ -1,7 +1,7 @@
 import Login from "./login/Login.jsx";
 import SignUp from "./signUp/SignUp.jsx";
 import { useState, useEffect } from "react";
-import styles from './LoginSign.module.css';
+import styles from './loginSign.module.css';
 import { useAuth } from "../provider/AuthProvider.jsx";
 import { useNavigate } from "react-router-dom";
 
