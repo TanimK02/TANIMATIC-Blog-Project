@@ -23,5 +23,5 @@ export const getSinglePost = (id) => axiosPublic.get(`/posts/posts/${id}`)
 // Comments
 export const getComments = (postId, page = 1) => axiosPublic.get(`/comments/${postId}/${page}`)
 export const createComment = (postId, content) => axiosAuth.post(`/comments/${postId}`, { content })
-export const updateComment = (commentId, content) => axiosAuth.put(`/comments/${commentId}`, { content })
-export const deleteComment = (commentId) => axiosAuth.delete(`/comments/${commentId}`)
+export const updateComment = (commentId, content) => axiosAuth.put(`/comment/${commentId}`, { content })
+export const deleteComment = (commentId) => axiosAuth.delete(`/comment/${commentId}`)
