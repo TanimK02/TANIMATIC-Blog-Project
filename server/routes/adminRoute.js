@@ -109,17 +109,12 @@ adminRouter.get("/posts/:page", requireUser, requireAdmin, async (req, res) => {
 adminRouter.get("/post/:id", requireUser, requireAdmin, async (req, res) => {
     const postId = parseInt(req.params.id);
     try {
-        const post = await prisma.post.findUnique({
-            where: {
-                id: postId,
-                authorId: req.user.id
-            },
-            include: {
-                tags: true
-            }
-        });
+        const post = await prisma.post.findUnique({ where: { id: postId }, include: { tags: true } });
         if (!post) {
             return res.status(404).json({ error: "Post not found" });
+        }
+        if (post.authorId !== req.user.id) {
+            return res.status(403).json({ error: "Forbidden" });
         }
         res.json({ post });
     }
@@ -131,12 +126,14 @@ adminRouter.get("/post/:id", requireUser, requireAdmin, async (req, res) => {
 adminRouter.delete("/post/:id", requireUser, requireAdmin, async (req, res) => {
     const postId = parseInt(req.params.id);
     try {
-        await prisma.post.delete({
-            where: {
-                id: postId,
-                authorId: req.user.id
-            }
-        });
+        const post = await prisma.post.findUnique({ where: { id: postId } });
+        if (!post) {
+            return res.status(404).json({ error: "Post not found" });
+        }
+        if (post.authorId !== req.user.id) {
+            return res.status(403).json({ error: "Forbidden" });
+        }
+        await prisma.post.delete({ where: { id: postId } });
         res.json({ message: "Post deleted successfully" });
     }
     catch (error) {
@@ -147,17 +144,15 @@ adminRouter.delete("/post/:id", requireUser, requireAdmin, async (req, res) => {
 adminRouter.put("/post/:id/publish", requireUser, requireAdmin, async (req, res) => {
     const postId = parseInt(req.params.id);
     try {
-        const post = await prisma.post.update({
-            where: {
-                id: postId,
-                authorId: req.user.id
-            },
-            data: {
-                published: true,
-                publicationDate: new Date()
-            }
-        });
-        res.json({ message: "Post published successfully", post });
+        const post = await prisma.post.findUnique({ where: { id: postId } });
+        if (!post) {
+            return res.status(404).json({ error: "Post not found" });
+        }
+        if (post.authorId !== req.user.id) {
+            return res.status(403).json({ error: "Forbidden" });
+        }
+        const updated = await prisma.post.update({ where: { id: postId }, data: { published: true, publicationDate: new Date() } });
+        res.json({ message: "Post published successfully", post: updated });
     }
     catch (error) {
         res.status(500).json({ error: "Internal server error" });
@@ -167,17 +162,15 @@ adminRouter.put("/post/:id/publish", requireUser, requireAdmin, async (req, res)
 adminRouter.put("/post/:id/unpublish", requireUser, requireAdmin, async (req, res) => {
     const postId = parseInt(req.params.id);
     try {
-        const post = await prisma.post.update({
-            where: {
-                id: postId,
-                authorId: req.user.id
-            },
-            data: {
-                published: false,
-                publicationDate: null
-            }
-        });
-        res.json({ message: "Post unpublished successfully", post });
+        const post = await prisma.post.findUnique({ where: { id: postId } });
+        if (!post) {
+            return res.status(404).json({ error: "Post not found" });
+        }
+        if (post.authorId !== req.user.id) {
+            return res.status(403).json({ error: "Forbidden" });
+        }
+        const updated = await prisma.post.update({ where: { id: postId }, data: { published: false, publicationDate: null } });
+        res.json({ message: "Post unpublished successfully", post: updated });
     }
     catch (error) {
         res.status(500).json({ error: "Internal server error" });
@@ -230,11 +223,15 @@ adminRouter.put("/post/:id", requireUser, requireAdmin, upload.single("bannerImg
     const postId = parseInt(req.params.id);
     const { title, content, tags } = req.body;
     try {
+        const existing = await prisma.post.findUnique({ where: { id: postId } });
+        if (!existing) {
+            return res.status(404).json({ error: "Post not found" });
+        }
+        if (existing.authorId !== req.user.id) {
+            return res.status(403).json({ error: "Forbidden" });
+        }
         const post = await prisma.post.update({
-            where: {
-                id: postId,
-                authorId: req.user.id
-            },
+            where: { id: postId },
             data: {
                 title,
                 content,

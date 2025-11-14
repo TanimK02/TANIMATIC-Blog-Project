@@ -50,7 +50,8 @@ export default function Admin() {
                 }
             } catch (error) {
                 console.error("Error deleting post:", error);
-                alert("Failed to delete post");
+                const errMsg = error.response?.data?.error || error.response?.data?.message || error.message || 'Failed to delete post';
+                alert(`Failed to delete post: ${errMsg}`);
             }
         }
     }
