@@ -22,6 +22,19 @@ commentRouter.get("/:postId/:commentPage", async (req, res) => {
                         username: true
                     }
                 }
+            },
+            select: {
+                id: true,
+                content: true,
+                createdAt: true,
+                updatedAt: true,
+                postId: true,
+                authorId: true,
+                author: {
+                    select: {
+                        username: true
+                    }
+                }
             }
         })
         res.json({ comments })

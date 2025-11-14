@@ -166,12 +166,14 @@ export default function ViewPost() {
                                         </span>
                                     </div>
                                     <p className={styles.commentContent}>{comment.content}</p>
-                                    <button
-                                        onClick={() => handleDeleteComment(comment.id)}
-                                        className={styles.deleteCommentBtn}
-                                    >
-                                        Delete
-                                    </button>
+                                    {(user?.admin || comment.authorId === user?.id) && (
+                                        <button
+                                            onClick={() => handleDeleteComment(comment.id)}
+                                            className={styles.deleteCommentBtn}
+                                        >
+                                            Delete
+                                        </button>
+                                    )}
                                 </div>
                             ))}
                         </div>
