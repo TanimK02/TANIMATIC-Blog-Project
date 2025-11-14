@@ -66,7 +66,7 @@ export default function PostDetail() {
 
             <ul className="comments-list">
                 {comments.map(c => {
-                    console.log('Comment check:', { commentAuthorId: c.authorId, userId: user?.id, isAuth: isAuthenticated, hasUser: !!user });
+                    console.log('Comment check:', { commentAuthorId: c.authorId, userId: user?.id, isAuth: isAuthenticated, hasUser: !!user, user });
                     return (
                         <li key={c.id} className="comment-item">
                             <div className="comment-content">{c.content}</div>
