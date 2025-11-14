@@ -16,7 +16,10 @@ export default function PostDetail() {
     }, [id])
 
     useEffect(() => {
-        getComments(id, commentPage).then(res => setComments(res.data.comments || [])).catch(console.error)
+        getComments(id, commentPage).then(res => {
+            console.log('Comments data:', res.data.comments);
+            setComments(res.data.comments || []);
+        }).catch(console.error)
     }, [id, commentPage])
 
     async function onAddComment(e) {

@@ -9,8 +9,18 @@ import { userRouter, adminRouter, postsRouter, commentRouter } from "./routes/in
 
 const app = express();
 
+const allowedOrigins = [
+    "https://tanimatic-admin.vercel.app",
+    "https://tanimatic-frontend.vercel.app"
+];
+
+if (process.env.NODE_ENV === 'development') {
+    allowedOrigins.push("http://localhost:5173", "http://localhost:5174");
+}
+
 app.use(cors({
-    origin: "*", // or specific origins for production
+    origin: allowedOrigins,
+    credentials: true
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
