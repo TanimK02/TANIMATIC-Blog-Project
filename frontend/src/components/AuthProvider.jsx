@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
         try {
             const res = await getCurrentUser()
             if (res.status === 200) {
-                setUser(res.data)
+                setUser(res.data.user)
                 setIsAuthenticated(true)
             }
         } catch (e) {
