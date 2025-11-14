@@ -193,7 +193,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -202,8 +201,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        Int       @id @default(autoincrement())\n  username  String    @unique\n  email     String    @unique\n  password  String\n  name      String?\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  admin     Boolean   @default(false)\n  posts     Post[]\n  comments  Comment[]\n}\n\nmodel Post {\n  id              Int       @id @default(autoincrement())\n  title           String\n  content         String?\n  published       Boolean   @default(false)\n  publicationDate DateTime?\n  authorId        Int\n  author          User      @relation(fields: [authorId], references: [id])\n  createdAt       DateTime  @default(now())\n  updatedAt       DateTime  @updatedAt\n  comments        Comment[]\n  bannerImg       String?\n  tags            Tag[]     @relation(\"PostTags\")\n}\n\nmodel Comment {\n  id        Int      @id @default(autoincrement())\n  content   String\n  postId    Int\n  post      Post     @relation(fields: [postId], references: [id])\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  author    User?    @relation(fields: [authorId], references: [id])\n  authorId  Int?\n}\n\nmodel Tag {\n  id        Int      @id @default(autoincrement())\n  name      String   @unique\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  posts     Post[]   @relation(\"PostTags\")\n}\n",
-  "inlineSchemaHash": "51e7077d55a0c1628406f193ae11f780b2205b04c47d01903bde1ec6403a5fc4",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        Int       @id @default(autoincrement())\n  username  String    @unique\n  email     String    @unique\n  password  String\n  name      String?\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  admin     Boolean   @default(false)\n  posts     Post[]\n  comments  Comment[]\n}\n\nmodel Post {\n  id              Int       @id @default(autoincrement())\n  title           String\n  content         String?\n  published       Boolean   @default(false)\n  publicationDate DateTime?\n  authorId        Int\n  author          User      @relation(fields: [authorId], references: [id], onDelete: Cascade)\n  createdAt       DateTime  @default(now())\n  updatedAt       DateTime  @updatedAt\n  comments        Comment[]\n  bannerImg       String?\n  tags            Tag[]     @relation(\"PostTags\")\n}\n\nmodel Comment {\n  id        Int      @id @default(autoincrement())\n  content   String\n  postId    Int\n  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)\n  authorId  Int?\n}\n\nmodel Tag {\n  id        Int      @id @default(autoincrement())\n  name      String   @unique\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  posts     Post[]   @relation(\"PostTags\")\n}\n",
+  "inlineSchemaHash": "02d89027e3f832abbff073752bc44df445e778ba2c6897b17550598d9525ad84",
   "copyEngine": true
 }
 config.dirname = '/'
