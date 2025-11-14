@@ -137,7 +137,7 @@ adminRouter.delete("/post/:id", requireUser, requireAdmin, async (req, res) => {
         res.json({ message: "Post deleted successfully" });
     }
     catch (error) {
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: "Internal server error", details: error.message });
     }
 });
 
