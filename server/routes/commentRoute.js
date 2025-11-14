@@ -15,7 +15,14 @@ commentRouter.get("/:postId/:commentPage", async (req, res) => {
                 postId
             },
             skip,
-            take: pageSize
+            take: pageSize,
+            include: {
+                author: {
+                    select: {
+                        username: true
+                    }
+                }
+            }
         })
         res.json({ comments })
     }
