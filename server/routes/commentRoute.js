@@ -16,13 +16,6 @@ commentRouter.get("/:postId/:commentPage", async (req, res) => {
             },
             skip,
             take: pageSize,
-            include: {
-                author: {
-                    select: {
-                        username: true
-                    }
-                }
-            },
             select: {
                 id: true,
                 content: true,
