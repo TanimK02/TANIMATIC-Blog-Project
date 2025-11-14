@@ -65,19 +65,22 @@ export default function PostDetail() {
             )}
 
             <ul className="comments-list">
-                {comments.map(c => (
-                    <li key={c.id} className="comment-item">
-                        <div className="comment-content">{c.content}</div>
-                        <div className="meta">By {c.author?.username ?? 'Unknown'} • {new Date(c.createdAt).toLocaleString()}</div>
-                        {isAuthenticated && user && c.authorId === user.id && (
-                            <div className="comment-actions">
-                                <button className="btn" onClick={() => {
-                                    if (confirm('Delete this comment?')) onDeleteComment(c.id)
-                                }}>Delete</button>
-                            </div>
-                        )}
-                    </li>
-                ))}
+                {comments.map(c => {
+                    console.log('Comment check:', { commentAuthorId: c.authorId, userId: user?.id, isAuth: isAuthenticated, hasUser: !!user });
+                    return (
+                        <li key={c.id} className="comment-item">
+                            <div className="comment-content">{c.content}</div>
+                            <div className="meta">By {c.author?.username ?? 'Unknown'} • {new Date(c.createdAt).toLocaleString()}</div>
+                            {isAuthenticated && user && c.authorId === user.id && (
+                                <div className="comment-actions">
+                                    <button className="btn" onClick={() => {
+                                        if (confirm('Delete this comment?')) onDeleteComment(c.id)
+                                    }}>Delete</button>
+                                </div>
+                            )}
+                        </li>
+                    );
+                })}
             </ul>
             <div className="row">
                 <button className="btn" onClick={() => setCommentPage(p => Math.max(1, p - 1))} disabled={commentPage === 1}>Prev</button>
