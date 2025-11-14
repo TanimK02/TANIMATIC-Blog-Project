@@ -28,6 +28,9 @@ commentRouter.get("/:postId/:commentPage", async (req, res) => {
                         username: true
                     }
                 }
+            },
+            orderBy: {
+                createdAt: 'desc'
             }
         })
         res.json({ comments })
