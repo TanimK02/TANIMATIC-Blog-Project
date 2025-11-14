@@ -62,11 +62,11 @@ export const createComment = async (postId, content) => {
 };
 
 export const updateComment = async (commentId, content) => {
-    return axiosAuth.put(`/comments/${commentId}`, { content });
+    return axiosAuth.put(`/comments/comment/${commentId}`, { content });
 };
 
 export const deleteComment = async (commentId) => {
-    return axiosAuth.delete(`/comments/${commentId}`);
+    return axiosAuth.delete(`/comments/comment/${commentId}`);
 };
 
 // --------------------

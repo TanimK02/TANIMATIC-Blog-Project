@@ -54,7 +54,7 @@ commentRouter.post("/:postId", requireUser, [
     }
 });
 
-commentRouter.put("/:commentId", requireUser, [
+commentRouter.put("/comment/:commentId", requireUser, [
     body("content").notEmpty().withMessage("Content is required"),
 ], async (req, res) => {
     const commentId = parseInt(req.params.commentId);
@@ -98,7 +98,7 @@ commentRouter.put("/:commentId", requireUser, [
     }
 });
 
-commentRouter.delete("/:commentId", requireUser, async (req, res) => {
+commentRouter.delete("/comment/:commentId", requireUser, async (req, res) => {
     const commentId = parseInt(req.params.commentId);
 
     try {
